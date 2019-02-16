@@ -138,22 +138,46 @@ cd build
 # There are also switches which tell CMAKE to build the samples and tests
 # Check OpenCV documentation for details
 
-
-time cmake -D CMAKE_BUILD_TYPE=RELEASE \
-      -D CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
-      -D WITH_CUDA=ON \
-      -D CUDA_ARCH_BIN=${ARCH_BIN} \
-      -D CUDA_ARCH_PTX="" \
-      -D ENABLE_FAST_MATH=ON \
-      -D CUDA_FAST_MATH=ON \
-      -D WITH_CUBLAS=ON \
-      -D WITH_LIBV4L=ON \
-      -D WITH_GSTREAMER=ON \
-      -D WITH_GSTREAMER_0_10=OFF \
-      -D WITH_QT=ON \
-      -D WITH_OPENGL=ON \
-      -D CPACK_BINARY_DEB=ON \
-      ../
+time cmake \
+    -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_PNG=OFF \
+    -DBUILD_TIFF=OFF \
+    -DBUILD_TBB=OFF \
+    -DBUILD_JPEG=OFF \
+    -DBUILD_JASPER=OFF \
+    -DBUILD_ZLIB=OFF \
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_opencv_java=OFF \
+    -DBUILD_opencv_python2=ON \
+    -DBUILD_opencv_python3=OFF \
+    -DENABLE_PRECOMPILED_HEADERS=OFF \
+    -DWITH_OPENCL=OFF \
+    -DWITH_OPENMP=OFF \
+    -DWITH_FFMPEG=OFF \
+    -DWITH_GSTREAMER=OFF \
+    -DWITH_GSTREAMER_0_10=OFF \
+    -DWITH_CUDA=ON \
+    -DENABLE_FAST_MATH=ON \
+    -DCUDA_FAST_MATH=ON \
+    -DWITH_CUBLAS=ON \
+    -DWITH_LIBV4L=OFF \
+    -DWITH_GTK=OFF \
+    -DWITH_VTK=OFF \
+    -DWITH_TBB=ON \
+    -DWITH_1394=OFF \
+    -DWITH_OPENEXR=OFF \
+    -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-8.0 \
+    -DCUDA_ARCH_BIN=${ARCH_BIN} \
+    -DCUDA_ARCH_PTX="" \
+    -DWITH_QT=OFF \
+    -DWITH_OPENGL=OFF \
+    -DCPACK_BINARY_DEB=ON \
+    -DINSTALL_C_EXAMPLES=OFF \
+    -DINSTALL_TESTS=OFF \
+    -DOPENCV_TEST_DATA_PATH=../opencv_extra/testdata \
+    ../opencv
 
 if [ $? -eq 0 ] ; then
   echo "CMake configuration make successful"
