@@ -2,7 +2,7 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2018)
 
-OPENCV_VERSION=3.4.1
+OPENCV_VERSION=3.4.5
 # Jetson TX2
 ARCH_BIN=6.2
 # Jetson TX1
@@ -92,8 +92,8 @@ sudo apt-get install -y \
     pkg-config
 
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
-cd /usr/local/cuda/include
-sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' 
+#cd /usr/local/cuda/include
+#sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' 
 # Clean up the OpenGL tegra libs that usually get crushed
 cd /usr/lib/aarch64-linux-gnu/
 sudo ln -sf tegra/libGL.so libGL.so
