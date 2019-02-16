@@ -159,7 +159,6 @@ time cmake \
     -DWITH_GSTREAMER=OFF \
     -DWITH_GSTREAMER_0_10=OFF \
     -DWITH_CUDA=ON \
-    -DENABLE_FAST_MATH=ON \
     -DCUDA_FAST_MATH=ON \
     -DWITH_CUBLAS=ON \
     -DWITH_LIBV4L=OFF \
@@ -177,7 +176,7 @@ time cmake \
     -DINSTALL_C_EXAMPLES=OFF \
     -DINSTALL_TESTS=OFF \
     -DOPENCV_TEST_DATA_PATH=../opencv_extra/testdata \
-    ../opencv
+    ../
 
 if [ $? -eq 0 ] ; then
   echo "CMake configuration make successful"
