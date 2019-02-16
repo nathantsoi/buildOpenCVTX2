@@ -110,12 +110,6 @@ cd $OPENCV_SOURCE_DIR
 git clone https://github.com/opencv/opencv.git
 cd opencv
 git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
-if [ $OPENCV_VERSION = 3.4.1 ] ; then
-  # For 3.4.1, use this commit to fix samples/gpu/CMakeLists.txt
-  git merge ec0bb66
-  # For 3.4.1, use this to fix C compilation issues (like in YOLO)
-  git cherry-pick 549b5df
-fi
 
 if [ $DOWNLOAD_OPENCV_EXTRAS == "YES" ] ; then
  echo "Installing opencv_extras"
@@ -129,14 +123,6 @@ fi
 cd $OPENCV_SOURCE_DIR/opencv
 mkdir build
 cd build
-
-# Here are some options to install source examples and tests
-#     -D INSTALL_TESTS=ON \
-#     -D OPENCV_TEST_DATA_PATH=../opencv_extra/testdata \
-#     -D INSTALL_C_EXAMPLES=ON \
-#     -D INSTALL_PYTHON_EXAMPLES=ON \
-# There are also switches which tell CMAKE to build the samples and tests
-# Check OpenCV documentation for details
 
 time cmake \
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
@@ -207,46 +193,4 @@ else
     echo "Please fix issues and retry build"
     exit 1
   fi
-fi
-
-echo "Installing ... "
-sudo make install
-if [ $? -eq 0 ] ; then
-   echo "OpenCV installed in: $CMAKE_INSTALL_PREFIX"
-else
-   echo "There was an issue with the final installation"
-   exit 1
-fi
-
-echo "Starting Packaging"
-sudo ldconfig  
-NUM_CPU=$(nproc)
-time sudo make package -j$(($NUM_CPU - 1))
-if [ $? -eq 0 ] ; then
-  echo "OpenCV make package successful"
-else
-  # Try to make again; Sometimes there are issues with the build
-  # because of lack of resources or concurrency issues
-  echo "Make package did not build " >&2
-  echo "Retrying ... "
-  # Single thread this time
-  sudo make package
-  if [ $? -eq 0 ] ; then
-    echo "OpenCV make package successful"
-  else
-    # Try to make again
-    echo "Make package did not successfully build" >&2
-    echo "Please fix issues and retry build"
-    exit 1
-  fi
-fi
-
-
-# check installation
-IMPORT_CHECK="$(python -c "import cv2 ; print cv2.__version__")"
-if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
-  echo "There was an error loading OpenCV in the Python sanity test."
-  echo "The loaded version does not match the version built here."
-  echo "Please check the installation."
-  echo "The first check should be the PYTHONPATH environment variable."
 fi
