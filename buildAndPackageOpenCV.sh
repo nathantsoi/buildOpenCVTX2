@@ -83,7 +83,7 @@ sudo apt-get install -y python-dev python-numpy python-py python-pytest
 sudo apt-get install -y python3-dev python3-numpy python3-py python3-pytest
 
 # GStreamer support
-sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
+#sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
 
 cd $OPENCV_SOURCE_DIR
 git clone https://github.com/opencv/opencv.git
