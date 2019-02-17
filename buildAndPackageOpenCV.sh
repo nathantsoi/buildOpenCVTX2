@@ -2,11 +2,9 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2018)
 
-OPENCV_VERSION=3.4.5
+OPENCV_VERSION=4.0.1
 # Jetson TX2
 ARCH_BIN=6.2
-# Jetson TX1
-# ARCH_BIN=5.3
 INSTALL_DIR=/usr/local
 # Download the opencv_extras repository
 # If you are installing the opencv testdata, ie
@@ -95,8 +93,8 @@ sudo apt-get install -y \
 #cd /usr/local/cuda/include
 #sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' 
 # Clean up the OpenGL tegra libs that usually get crushed
-cd /usr/lib/aarch64-linux-gnu/
-sudo ln -sf tegra/libGL.so libGL.so
+#cd /usr/lib/aarch64-linux-gnu/
+#sudo ln -sf tegra/libGL.so libGL.so
 
 # Python 2.7
 sudo apt-get install -y python-dev python-numpy python-py python-pytest
@@ -150,10 +148,9 @@ time cmake \
     -DWITH_LIBV4L=OFF \
     -DWITH_GTK=OFF \
     -DWITH_VTK=OFF \
-    -DWITH_TBB=ON \
+    -DWITH_TBB=OFF \
     -DWITH_1394=OFF \
     -DWITH_OPENEXR=OFF \
-    -DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-8.0 \
     -DCUDA_ARCH_BIN=${ARCH_BIN} \
     -DCUDA_ARCH_PTX="" \
     -DWITH_QT=OFF \
@@ -163,6 +160,8 @@ time cmake \
     -DINSTALL_TESTS=OFF \
     -DOPENCV_TEST_DATA_PATH=../opencv_extra/testdata \
     ../
+
+    #-DCUDA_TOOLKIT_ROOT_DIR=/usr/local/cuda-8.0 \
 
 if [ $? -eq 0 ] ; then
   echo "CMake configuration make successful"
@@ -193,4 +192,55 @@ else
     echo "Please fix issues and retry build"
     exit 1
   fi
+fi
+
+echo "Installing ... "
+sudo make install
+if [ $? -eq 0 ] ; then
+   echo "OpenCV installed in: $CMAKE_INSTALL_PREFIX"
+else
+   echo "There was an issue with the final installation"
+   exit 1
+fi
+
+# check installation
+IMPORT_CHECK="$(python -c "import cv2 ; print cv2.__version__")"
+if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
+  echo "There was an error loading OpenCV in the Python sanity test."
+  echo "The loaded version does not match the version built here."
+  echo "Please check the installation."
+  echo "The first check should be the PYTHONPATH environment variable."
+fi
+
+echo "Starting Packaging"
+sudo ldconfig  
+NUM_CPU=$(nproc)
+time sudo make package -j$(($NUM_CPU - 1))
+if [ $? -eq 0 ] ; then
+  echo "OpenCV make package successful"
+else
+  # Try to make again; Sometimes there are issues with the build
+  # because of lack of resources or concurrency issues
+  echo "Make package did not build " >&2
+  echo "Retrying ... "
+  # Single thread this time
+  sudo make package
+  if [ $? -eq 0 ] ; then
+    echo "OpenCV make package successful"
+  else
+    # Try to make again
+    echo "Make package did not successfully build" >&2
+    echo "Please fix issues and retry build"
+    exit 1
+  fi
+fi
+
+
+# check installation
+IMPORT_CHECK="$(python -c "import cv2 ; print(cv2.__version__)")"
+if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
+  echo "There was an error loading OpenCV in the Python sanity test."
+  echo "The loaded version does not match the version built here."
+  echo "Please check the installation."
+  echo "The first check should be the PYTHONPATH environment variable."
 fi
