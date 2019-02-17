@@ -68,25 +68,6 @@ sudo apt-get update
 cd $WHEREAMI
 sudo apt-get install -y \
     cmake \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libeigen3-dev \
-    libglew-dev \
-    libgtk2.0-dev \
-    libgtk-3-dev \
-    libjasper-dev \
-    libjpeg-dev \
-    libpng12-dev \
-    libpostproc-dev \
-    libswscale-dev \
-    libtbb-dev \
-    libtiff5-dev \
-    libv4l-dev \
-    libxvidcore-dev \
-    libx264-dev \
-    qt5-default \
-    zlib1g-dev \
     pkg-config
 
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
