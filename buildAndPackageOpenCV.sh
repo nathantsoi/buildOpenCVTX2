@@ -68,6 +68,7 @@ apt-get update
 cd $WHEREAMI
 apt-get install -y \
     cmake \
+    git \
     pkg-config
 
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
