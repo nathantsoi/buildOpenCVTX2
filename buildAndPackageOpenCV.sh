@@ -218,10 +218,54 @@ fi
 
 
 # check installation
-IMPORT_CHECK="$(python -c "import cv2 ; print(cv2.__version__)")"
-if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
-  echo "There was an error loading OpenCV in the Python sanity test."
-  echo "The loaded version does not match the version built here."
-  echo "Please check the installation."
-  echo "The first check should be the PYTHONPATH environment variable."
+#IMPORT_CHECK="$(python -c "import cv2 ; print(cv2.__version__)")"
+#if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
+#  echo "There was an error loading OpenCV in the Python sanity test."
+#  echo "The loaded version does not match the version built here."
+#  echo "Please check the installation."
+#  echo "The first check should be the PYTHONPATH environment variable."
+#fi
+
+export ARCH=`dpkg --print-architecture`
+export PACKAGES=`ls *.deb`
+
+if [ ${ARCH} == "amd64" ]; then
+  export ARCH="x86_64"
 fi
+
+pushd ${OPENCV_SOURCE_DIR}/build
+
+export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-${ARCH}-dev.deb"
+export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-${ARCH}-libs.deb"
+export DEBIAN_PACKAGE_PYTHON="OpenCV-3.4.5-${ARCH}-python.deb"
+export DEBIAN_PACKAGE_LICENSES="OpenCV-3.4.5-${ARCH}-licenses.deb"
+export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-${ARCH}-scripts.deb"
+
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${DEBIAN_PACKAGE_DEV}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_DEV};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${DEBIAN_PACKAGE_LIBS}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LIBS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${DEBIAN_PACKAGE_PYTHON}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_PYTHON};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${DEBIAN_PACKAGE_LICENSES}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIF.ACTORY_PASSWORD}" \
+	-T "${DEBIAN_PACKAGE_SCRIPTS}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+
+popd
+
+rm -rf ${OPENCV_SOURCE_DIR}/build
