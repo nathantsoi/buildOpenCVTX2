@@ -14,8 +14,9 @@ parallel(
                     withCredentials([string(credentialsId: 'github-access-token', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                         export ARCH='amd64'
+                        export OPENCV_ARCH='x86_64'
                         export DISTRO='xenial'
-                        ./build.sh 
+                        ./buildAndPackageOpenCV.sh 
                         '''
                     } }
                 } 
@@ -32,8 +33,9 @@ parallel(
                     withCredentials([string(credentialsId: 'github-access-token', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                         export ARCH='arm64'
+                        export OPENCV_ARCH='arm64'
                         export DISTRO='xenial'
-                        ./build.sh 
+                        ./buildAndPackageOpenCV.sh 
                         '''
                     } }
                 } 

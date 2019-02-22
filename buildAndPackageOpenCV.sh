@@ -226,20 +226,15 @@ fi
 #  echo "The first check should be the PYTHONPATH environment variable."
 #fi
 
-export ARCH=`dpkg --print-architecture`
 export PACKAGES=`ls *.deb`
-
-if [ ${ARCH} == "amd64" ]; then
-  export ARCH="x86_64"
-fi
 
 pushd ${OPENCV_SOURCE_DIR}/build
 
-export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-${ARCH}-dev.deb"
-export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-${ARCH}-libs.deb"
-export DEBIAN_PACKAGE_PYTHON="OpenCV-3.4.5-${ARCH}-python.deb"
-export DEBIAN_PACKAGE_LICENSES="OpenCV-3.4.5-${ARCH}-licenses.deb"
-export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-${ARCH}-scripts.deb"
+export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-${OPENCV_ARCH}-dev.deb"
+export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-${OPENCV_ARCH}-libs.deb"
+export DEBIAN_PACKAGE_PYTHON="OpenCV-3.4.5-${OPENCV_ARCH}-python.deb"
+export DEBIAN_PACKAGE_LICENSES="OpenCV-3.4.5-${OPENCV_ARCH}-licenses.deb"
+export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-${OPENCV_ARCH}-scripts.deb"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
