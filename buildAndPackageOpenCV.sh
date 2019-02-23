@@ -241,7 +241,7 @@ export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-${OPENCV_ARCH}-scripts.deb"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${DEBIAN_PACKAGE_DEV}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_DEV}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_DEV};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
@@ -251,17 +251,17 @@ time curl \
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${DEBIAN_PACKAGE_PYTHON}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_PYTHON}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_PYTHON};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${DEBIAN_PACKAGE_LICENSES}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIF.ACTORY_PASSWORD}" \
-	-T "${DEBIAN_PACKAGE_SCRIPTS}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_SCRIPTS}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 popd
