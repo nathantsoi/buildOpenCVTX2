@@ -33,7 +33,7 @@ parallel(
                     withCredentials([string(credentialsId: 'github-access-token', variable: 'GITHUB_TOKEN')]) {
                         sh '''
                         export ARCH='arm64'
-                        export OPENCV_ARCH='arm64'
+                        export OPENCV_ARCH='aarch64'
                         export DISTRO='xenial'
                         ./buildAndPackageOpenCV.sh 
                         '''
