@@ -68,6 +68,7 @@ apt-get update
 cd $WHEREAMI
 apt-get install -y \
     cmake \
+    ccache \
     git \
     curl \
     pkg-config
@@ -104,6 +105,8 @@ fi
 cd $OPENCV_SOURCE_DIR/opencv
 mkdir build
 cd build
+
+export PATH=/usr/lib/ccache:${PATH}
 
 time cmake \
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
