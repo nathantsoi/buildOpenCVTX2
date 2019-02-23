@@ -228,9 +228,7 @@ fi
 #  echo "The first check should be the PYTHONPATH environment variable."
 #fi
 
-export PACKAGES=`ls *.deb`
-
-pushd ${OPENCV_SOURCE_DIR}/build
+pushd ${OPENCV_SOURCE_DIR}/opencv/build
 
 export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-${OPENCV_ARCH}-dev.deb"
 export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-${OPENCV_ARCH}-libs.deb"
