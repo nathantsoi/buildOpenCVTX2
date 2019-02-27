@@ -246,7 +246,7 @@ time curl \
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${DEBIAN_PACKAGE_LIBS}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LIBS}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LIBS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
@@ -256,7 +256,7 @@ time curl \
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
