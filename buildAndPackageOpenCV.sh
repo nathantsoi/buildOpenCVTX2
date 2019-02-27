@@ -257,12 +257,12 @@ time curl \
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_SCRIPTS}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/p/pcl/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 popd
 
