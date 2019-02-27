@@ -114,7 +114,7 @@ time cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_PNG=OFF \
     -DBUILD_TIFF=OFF \
-    -DBUILD_TBB=OFF \
+    -DBUILD_TBB=ON \
     -DBUILD_JPEG=OFF \
     -DBUILD_JASPER=OFF \
     -DBUILD_ZLIB=OFF \
@@ -124,7 +124,7 @@ time cmake \
     -DBUILD_opencv_python3=OFF \
     -DENABLE_PRECOMPILED_HEADERS=OFF \
     -DWITH_OPENCL=OFF \
-    -DWITH_OPENMP=OFF \
+    -DWITH_OPENMP=ON \
     -DWITH_FFMPEG=OFF \
     -DWITH_GSTREAMER=OFF \
     -DWITH_GSTREAMER_0_10=OFF \
@@ -134,7 +134,7 @@ time cmake \
     -DWITH_LIBV4L=OFF \
     -DWITH_GTK=OFF \
     -DWITH_VTK=OFF \
-    -DWITH_TBB=OFF \
+    -DWITH_TBB=ON \
     -DWITH_1394=OFF \
     -DWITH_OPENEXR=OFF \
     -DCUDA_ARCH_BIN=${ARCH_BIN} \
