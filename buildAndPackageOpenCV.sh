@@ -11,7 +11,7 @@ INSTALL_DIR=/usr/local
 #  OPENCV_TEST_DATA_PATH=../opencv_extra/testdata
 # Make sure that you set this to YES
 # Value should be YES or NO
-DOWNLOAD_OPENCV_EXTRAS=NO
+DOWNLOAD_OPENCV_EXTRAS=YES
 # Source code directory
 OPENCV_SOURCE_DIR=$HOME
 WHEREAMI=$PWD
@@ -128,13 +128,12 @@ time cmake \
     -DWITH_FFMPEG=OFF \
     -DWITH_GSTREAMER=OFF \
     -DWITH_GSTREAMER_0_10=OFF \
-    -DWITH_CUDA=OFF \
-    -DCUDA_FAST_MATH=OFF \
-    -DWITH_CUBLAS=OFF \
+    -DWITH_CUDA=ON \
+    -DCUDA_FAST_MATH=ON \
     -DWITH_LIBV4L=OFF \
     -DWITH_GTK=OFF \
     -DWITH_VTK=OFF \
-    -DWITH_TBB=ON \
+    -DWITH_TBB=OFF \
     -DWITH_1394=OFF \
     -DWITH_OPENEXR=OFF \
     -DCUDA_ARCH_BIN=${ARCH_BIN} \
