@@ -71,6 +71,7 @@ apt-get install -y \
     ccache \
     git \
     curl \
+    libtbb-dev \
     pkg-config
 
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
@@ -114,7 +115,6 @@ time cmake \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_PNG=OFF \
     -DBUILD_TIFF=OFF \
-    -DBUILD_TBB=OFF \
     -DBUILD_JPEG=OFF \
     -DBUILD_JASPER=OFF \
     -DBUILD_ZLIB=OFF \
@@ -123,20 +123,17 @@ time cmake \
     -DBUILD_opencv_python2=ON \
     -DBUILD_opencv_python3=OFF \
     -DENABLE_PRECOMPILED_HEADERS=OFF \
-    -DWITH_OPENCL=OFF \
-    -DWITH_OPENMP=ON \
     -DWITH_FFMPEG=OFF \
     -DWITH_GSTREAMER=OFF \
     -DWITH_GSTREAMER_0_10=OFF \
-    -DWITH_CUDA=OFF \
+    -DWITH_CUDA=ON \
+    -DWITH_CUBLAS=ON \
     -DENABLE_FAST_MATH=ON \
     -DCUDA_FAST_MATH=ON \
     -DWITH_LIBV4L=OFF \
     -DWITH_GTK=OFF \
     -DWITH_VTK=OFF \
     -DWITH_TBB=OFF \
-    -DWITH_1394=OFF \
-    -DWITH_OPENEXR=OFF \
     -DCUDA_ARCH_BIN=${ARCH_BIN} \
     -DCUDA_ARCH_PTX="" \
     -DWITH_QT=OFF \
