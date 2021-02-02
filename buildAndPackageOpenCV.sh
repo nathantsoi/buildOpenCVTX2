@@ -12,6 +12,9 @@ INSTALL_DIR=/usr/local
 # Make sure that you set this to YES
 # Value should be YES or NO
 DOWNLOAD_OPENCV_EXTRAS=YES
+# Download the opencv_contrib repository
+# To build with modules from opencv_contrib set OPENCV_EXTRA_MODULES_PATH to <path to opencv_contrib/modules/>
+DOWNLOAD_OPENCV_CONTRIB=YES
 # Source code directory
 OPENCV_SOURCE_DIR=$HOME
 WHEREAMI=$PWD
@@ -56,6 +59,10 @@ echo " Current OpenCV Installation: $JETSON_OPENCV"
 echo " OpenCV binaries will be installed in: $CMAKE_INSTALL_PREFIX"
 echo " OpenCV Source will be installed in: $OPENCV_SOURCE_DIR"
 
+if [ $DOWNLOAD_OPENCV_CONTRIB == "YES" ] ; then
+ echo "Also installing opencv_contrib"
+fi
+
 if [ $DOWNLOAD_OPENCV_EXTRAS == "YES" ] ; then
  echo "Also installing opencv_extras"
 fi
@@ -94,6 +101,15 @@ git clone https://github.com/opencv/opencv.git
 cd opencv
 git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
 
+if [ $DOWNLOAD_OPENCV_CONTRIB == "YES" ] ; then
+ echo "Installing opencv_contrib"
+ # This is for the test data
+ cd $OPENCV_SOURCE_DIR
+ git clone https://github.com/opencv/opencv_contrib.git
+ cd opencv_contrib
+ git checkout -b v${OPENCV_VERSION} ${OPENCV_VERSION}
+fi
+
 if [ $DOWNLOAD_OPENCV_EXTRAS == "YES" ] ; then
  echo "Installing opencv_extras"
  # This is for the test data
@@ -113,6 +129,7 @@ time cmake \
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \
     -DBUILD_PNG=OFF \
     -DBUILD_TIFF=OFF \
     -DBUILD_JPEG=OFF \
