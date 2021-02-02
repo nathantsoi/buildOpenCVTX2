@@ -129,7 +129,7 @@ time cmake \
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \
+    -DOPENCV_EXTRA_MODULES_PATH=$OPENCV_SOURCE_DIR/opencv_contrib/modules \
     -DBUILD_PNG=OFF \
     -DBUILD_TIFF=OFF \
     -DBUILD_JPEG=OFF \
