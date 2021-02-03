@@ -2,7 +2,7 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2018)
 
-OPENCV_VERSION=3.4.5
+OPENCV_VERSION=3.4.5-contrib
 # Jetson TX2
 ARCH_BIN=6.2
 INSTALL_DIR=/usr/local
