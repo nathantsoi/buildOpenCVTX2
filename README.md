@@ -1,4 +1,7 @@
 # buildOpenCVTX2
+
+6RS branch. Generates artifacts for 3.4.5
+
 Build and install OpenCV for the NVIDIA Jetson TX2
 
 These scripts build OpenCV version 3.4 for the NVIDIA Jetson TX2 Development Kit. Please see Releases/Tags for earlier versions.
