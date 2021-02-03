@@ -246,11 +246,11 @@ fi
 
 pushd ${OPENCV_SOURCE_DIR}/opencv/build
 
-export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-contrib-${OPENCV_ARCH}-dev.deb"
-export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-contrib-${OPENCV_ARCH}-libs.deb"
-export DEBIAN_PACKAGE_PYTHON="OpenCV-3.4.5-contrib-${OPENCV_ARCH}-python.deb"
-export DEBIAN_PACKAGE_LICENSES="OpenCV-3.4.5-contrib-${OPENCV_ARCH}-licenses.deb"
-export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-contrib-${OPENCV_ARCH}-scripts.deb"
+export DEBIAN_PACKAGE_DEV="OpenCV-4.5.1-${OPENCV_ARCH}-dev.deb"
+export DEBIAN_PACKAGE_LIBS="OpenCV-4.5.1-${OPENCV_ARCH}-libs.deb"
+export DEBIAN_PACKAGE_PYTHON="OpenCV-4.5.1-${OPENCV_ARCH}-python.deb"
+export DEBIAN_PACKAGE_LICENSES="OpenCV-4.5.1-${OPENCV_ARCH}-licenses.deb"
+export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-${OPENCV_ARCH}-scripts.deb"
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
