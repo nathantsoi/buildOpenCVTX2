@@ -256,7 +256,7 @@ export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-${OPENCV_ARCH}-scripts.deb"
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
 	-T "${OPENCV_SOURCE_DIR}/opencv/build/" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/;deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 
 # time curl \
