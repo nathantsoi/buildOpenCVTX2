@@ -246,11 +246,11 @@ fi
 
 pushd ${OPENCV_SOURCE_DIR}/opencv/build
 
-export DEBIAN_PACKAGE_DEV="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-dev.deb"
-export DEBIAN_PACKAGE_LIBS="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-libs.deb"
-export DEBIAN_PACKAGE_PYTHON="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-python.deb"
-export DEBIAN_PACKAGE_LICENSES="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-licenses.deb"
-export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-scripts.deb"
+export DEBIAN_PACKAGE_DEV="OpenCV-4.5.1-163-g3e34cec-${OPENCV_ARCH}-dev.deb"
+export DEBIAN_PACKAGE_LIBS="OpenCV-4.5.1-163-g3e34cec-${OPENCV_ARCH}-libs.deb"
+export DEBIAN_PACKAGE_PYTHON="OpenCV-4.5.1-163-g3e34cec-${OPENCV_ARCH}-python.deb"
+export DEBIAN_PACKAGE_LICENSES="OpenCV-4.5.1-163-g3e34cec-${OPENCV_ARCH}-licenses.deb"
+export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-163-g3e34cec-${OPENCV_ARCH}-scripts.deb"
 
 
 # time curl \
