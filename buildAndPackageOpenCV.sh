@@ -246,43 +246,43 @@ fi
 
 pushd ${OPENCV_SOURCE_DIR}/opencv/build
 
-export DEBIAN_PACKAGE_DEV="OpenCV-4.5.1-${OPENCV_ARCH}-dev.deb"
-export DEBIAN_PACKAGE_LIBS="OpenCV-4.5.1-${OPENCV_ARCH}-libs.deb"
-export DEBIAN_PACKAGE_PYTHON="OpenCV-4.5.1-${OPENCV_ARCH}-python.deb"
-export DEBIAN_PACKAGE_LICENSES="OpenCV-4.5.1-${OPENCV_ARCH}-licenses.deb"
-export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-${OPENCV_ARCH}-scripts.deb"
+export DEBIAN_PACKAGE_DEV="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-dev.deb"
+export DEBIAN_PACKAGE_LIBS="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-libs.deb"
+export DEBIAN_PACKAGE_PYTHON="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-python.deb"
+export DEBIAN_PACKAGE_LICENSES="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-licenses.deb"
+export DEBIAN_PACKAGE_SCRIPTS="OpenCV-4.5.1-163-g3e34ce-${OPENCV_ARCH}-scripts.deb"
+
+
+# time curl \
+# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/" \
+# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/;deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 
 time curl \
 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/;deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_DEV}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_DEV};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LIBS}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LIBS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
-# time curl \
-# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_DEV}" \
-# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_DEV};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_PYTHON}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_PYTHON};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
-# time curl \
-# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LIBS}" \
-# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LIBS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
-# time curl \
-# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_PYTHON}" \
-# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_PYTHON};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-# time curl \
-# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
-# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-# time curl \
-# 	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-# 	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_SCRIPTS}" \
-# 	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
+time curl \
+	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
+	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_SCRIPTS}" \
+	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
 
 popd
 
