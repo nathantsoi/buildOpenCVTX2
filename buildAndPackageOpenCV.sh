@@ -121,7 +121,7 @@ time cmake \
     -DBUILD_EXAMPLES=OFF \
     -DBUILD_opencv_java=OFF \
     -DBUILD_opencv_python2=ON \
-    -DBUILD_opencv_python3=OFF \
+    -DBUILD_opencv_python3=ON \
     -DENABLE_PRECOMPILED_HEADERS=OFF \
     -DWITH_FFMPEG=OFF \
     -DWITH_GSTREAMER=OFF \
