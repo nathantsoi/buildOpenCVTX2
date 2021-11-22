@@ -2,6 +2,9 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2018)
 
+set -e
+set -x
+
 OPENCV_VERSION=3.4.5
 # Jetson TX2
 ARCH_BIN=6.2
@@ -30,7 +33,7 @@ function usage
 while [ "$1" != "" ]; do
     case $1 in
         -s | --sourcedir )      shift
-				OPENCV_SOURCE_DIR=$1
+				                        OPENCV_SOURCE_DIR=$1
                                 ;;
         -i | --installdir )     shift
                                 INSTALL_DIR=$1
@@ -61,12 +64,12 @@ if [ $DOWNLOAD_OPENCV_EXTRAS == "YES" ] ; then
 fi
 
 # Repository setup
-apt-add-repository universe
-apt-get update
+sudo apt-add-repository universe
+sudo apt-get update
 
 # Download dependencies for the desired configuration
 cd $WHEREAMI
-apt-get install -y \
+sudo apt-get install -y \
     cmake \
     ccache \
     git \
@@ -76,15 +79,15 @@ apt-get install -y \
 
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
 cd /usr/local/cuda/include
-patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' 
+sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' || true
 # Clean up the OpenGL tegra libs that usually get crushed
 cd /usr/lib/aarch64-linux-gnu/
-ln -sf tegra/libGL.so libGL.so
+sudo ln -sf tegra/libGL.so libGL.so
 
 # Python 2.7
-apt-get install -y python-dev python-numpy python-py python-pytest
+sudo apt-get install -y python-dev python-numpy python-py python-pytest
 # Python 3.5
-apt-get install -y python3-dev python3-numpy python3-py python3-pytest
+sudo apt-get install -y python3-dev python3-numpy python3-py python3-pytest
 
 # GStreamer support
 #apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev 
@@ -104,7 +107,7 @@ if [ $DOWNLOAD_OPENCV_EXTRAS == "YES" ] ; then
 fi
 
 cd $OPENCV_SOURCE_DIR/opencv
-mkdir build
+mkdir -p build
 cd build
 
 export PATH=/usr/lib/ccache:${PATH}
@@ -177,7 +180,7 @@ else
 fi
 
 echo "Installing ... "
-make install
+sudo make install
 if [ $? -eq 0 ] ; then
    echo "OpenCV installed in: $CMAKE_INSTALL_PREFIX"
 else
@@ -186,7 +189,7 @@ else
 fi
 
 # check installation
-IMPORT_CHECK="$(python -c "import cv2 ; print cv2.__version__")"
+IMPORT_CHECK="$(python -c "import cv2 ; print(cv2.__version__)")"
 if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
   echo "There was an error loading OpenCV in the Python sanity test."
   echo "The loaded version does not match the version built here."
@@ -194,72 +197,4 @@ if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
   echo "The first check should be the PYTHONPATH environment variable."
 fi
 
-echo "Starting Packaging"
-ldconfig  
-NUM_CPU=$(nproc)
-time make package -j$(($NUM_CPU - 1))
-if [ $? -eq 0 ] ; then
-  echo "OpenCV make package successful"
-else
-  # Try to make again; Sometimes there are issues with the build
-  # because of lack of resources or concurrency issues
-  echo "Make package did not build " >&2
-  echo "Retrying ... "
-  # Single thread this time
-  make package
-  if [ $? -eq 0 ] ; then
-    echo "OpenCV make package successful"
-  else
-    # Try to make again
-    echo "Make package did not successfully build" >&2
-    echo "Please fix issues and retry build"
-    exit 1
-  fi
-fi
-
-
-# check installation
-#IMPORT_CHECK="$(python -c "import cv2 ; print(cv2.__version__)")"
-#if [[ $IMPORT_CHECK != *$OPENCV_VERSION* ]]; then
-#  echo "There was an error loading OpenCV in the Python sanity test."
-#  echo "The loaded version does not match the version built here."
-#  echo "Please check the installation."
-#  echo "The first check should be the PYTHONPATH environment variable."
-#fi
-
-pushd ${OPENCV_SOURCE_DIR}/opencv/build
-
-export DEBIAN_PACKAGE_DEV="OpenCV-3.4.5-${OPENCV_ARCH}-dev.deb"
-export DEBIAN_PACKAGE_LIBS="OpenCV-3.4.5-${OPENCV_ARCH}-libs.deb"
-export DEBIAN_PACKAGE_PYTHON="OpenCV-3.4.5-${OPENCV_ARCH}-python.deb"
-export DEBIAN_PACKAGE_LICENSES="OpenCV-3.4.5-${OPENCV_ARCH}-licenses.deb"
-export DEBIAN_PACKAGE_SCRIPTS="OpenCV-3.4.5-${OPENCV_ARCH}-scripts.deb"
-
-time curl \
-	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_DEV}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_DEV};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-time curl \
-	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LIBS}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LIBS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-time curl \
-	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_PYTHON}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_PYTHON};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-time curl \
-	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_LICENSES}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_LICENSES};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-time curl \
-	-H "X-JFrog-Art-Api: ${ARTIFACTORY_PASSWORD}" \
-	-T "${OPENCV_SOURCE_DIR}/opencv/build/${DEBIAN_PACKAGE_SCRIPTS}" \
-	"https://sixriver.jfrog.io/sixriver/debian/pool/main/o/opencv/${DEBIAN_PACKAGE_SCRIPTS};deb.distribution=${DISTRO};deb.component=main;deb.architecture=${ARCH}"
-
-popd
-
-rm -rf ${OPENCV_SOURCE_DIR}/build
+#rm -rf ${OPENCV_SOURCE_DIR}/build
