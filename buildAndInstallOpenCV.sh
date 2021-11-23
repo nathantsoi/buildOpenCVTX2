@@ -80,9 +80,11 @@ sudo apt-get install -y \
 # https://devtalk.nvidia.com/default/topic/1007290/jetson-tx2/building-opencv-with-opengl-support-/post/5141945/#5141945
 cd /usr/local/cuda/include
 sudo patch -N cuda_gl_interop.h $WHEREAMI'/patches/OpenGLHeader.patch' || true
-# Clean up the OpenGL tegra libs that usually get crushed
-cd /usr/lib/aarch64-linux-gnu/
-sudo ln -sf tegra/libGL.so libGL.so
+# link correct libGL
+pushd /usr/lib/aarch64-linux-gnu
+sudo ln -sf /usr/lib/aarch64-linux-gnu/libGL.so.1.0.0 libGL.so
+sudo ldconfig
+popd
 
 # Python 2.7
 sudo apt-get install -y python-dev python-numpy python-py python-pytest
@@ -116,31 +118,31 @@ time cmake \
     -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DBUILD_PNG=OFF \
-    -DBUILD_TIFF=OFF \
-    -DBUILD_JPEG=OFF \
-    -DBUILD_JASPER=OFF \
-    -DBUILD_ZLIB=OFF \
+    -DBUILD_PNG=ON \
+    -DBUILD_TIFF=ON \
+    -DBUILD_JPEG=ON \
+    -DBUILD_JASPER=ON \
+    -DBUILD_ZLIB=ON \
     -DBUILD_EXAMPLES=OFF \
     -DBUILD_opencv_java=OFF \
     -DBUILD_opencv_python2=ON \
     -DBUILD_opencv_python3=ON \
     -DENABLE_PRECOMPILED_HEADERS=OFF \
-    -DWITH_FFMPEG=OFF \
-    -DWITH_GSTREAMER=OFF \
-    -DWITH_GSTREAMER_0_10=OFF \
+    -DWITH_FFMPEG=ON \
+    -DWITH_GSTREAMER=ON \
+    -DWITH_GSTREAMER_0_10=ON \
     -DWITH_CUDA=ON \
     -DWITH_CUBLAS=ON \
     -DENABLE_FAST_MATH=ON \
     -DCUDA_FAST_MATH=ON \
-    -DWITH_LIBV4L=OFF \
-    -DWITH_GTK=OFF \
-    -DWITH_VTK=OFF \
+    -DWITH_LIBV4L=ON \
+    -DWITH_GTK=ON \
+    -DWITH_VTK=ON \
     -DCUDA_ARCH_BIN=${ARCH_BIN} \
     -DCUDA_ARCH_PTX="" \
-    -DWITH_QT=OFF \
-    -DWITH_OPENGL=OFF \
-    -DCPACK_BINARY_DEB=ON \
+    -DWITH_QT=ON \
+    -DWITH_OPENGL=ON \
+    -DCPACK_BINARY_DEB=OFF \
     -DINSTALL_C_EXAMPLES=OFF \
     -DINSTALL_TESTS=OFF \
     -DOPENCV_TEST_DATA_PATH=../opencv_extra/testdata \
