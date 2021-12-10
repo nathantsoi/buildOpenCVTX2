@@ -2,8 +2,8 @@
 # License: MIT. See license file in root directory
 # Copyright(c) JetsonHacks (2017-2018)
 
-set -e
-set -x
+#set -e 
+#set -x
 
 OPENCV_VERSION=3.4.5
 # Jetson TX2
